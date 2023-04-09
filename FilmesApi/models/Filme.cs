@@ -4,6 +4,9 @@ namespace FilmesApi.models
 {
     public class Filme
     {
+        [Key]
+        [Required]
+        
         public int id { get; set; }
 
         [Required(ErrorMessage = "O parametro de titulo não pode ser vazio")]
