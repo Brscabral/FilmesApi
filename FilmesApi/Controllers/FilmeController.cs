@@ -1,4 +1,5 @@
 ﻿using FilmesApi.Data;
+using FilmesApi.Data.Dto;
 using FilmesApi.models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,8 +18,16 @@ public class FilmeController : ControllerBase
 
     [HttpPost]
 
-    public  IActionResult adicionarFilmes([FromBody]Filme filme)
+    public  IActionResult adicionarFilmes([FromBody] CreateFilmeDto filmeDto)
     {
+        Filme filme = new Filme()
+        {
+            titulo = filmeDto.titulo,
+            genero = filmeDto.genero,
+            duracao = filmeDto.duracao
+
+        };
+       
         _context.Filme.Add(filme);
         _context.SaveChanges();
         return CreatedAtAction(nameof(retornaFilmesId), new { id = filme.id }, filme);
@@ -40,5 +49,25 @@ public class FilmeController : ControllerBase
         }
         return Ok(filme);
 
+    }
+
+    [HttpPut("{id}")]
+
+    public IActionResult atualizaFilmeDto(int id, [FromBody] UpdateFilmeDto filmedto) {
+        var filme = _context.Filme.FirstOrDefault(FilmesApi => FilmesApi.id == id);
+        if(filme == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+          filme.titulo = filmedto.titulo;
+          filme.genero = filmedto.genero;
+          filme.duracao = filmedto.duracao;
+
+            _context.SaveChanges();
+            return NoContent();
+
+        }
     }
 }
