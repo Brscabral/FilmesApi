@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FilmesApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]  
+[Route("[controller]")]
 public class FilmeController : ControllerBase
 {
     private FilmesContext _context;
@@ -18,7 +18,7 @@ public class FilmeController : ControllerBase
 
     [HttpPost]
 
-    public  IActionResult adicionarFilmes([FromBody] CreateFilmeDto filmeDto)
+    public IActionResult adicionarFilmes([FromBody] CreateFilmeDto filmeDto)
     {
         Filme filme = new Filme()
         {
@@ -27,7 +27,7 @@ public class FilmeController : ControllerBase
             duracao = filmeDto.duracao
 
         };
-       
+
         _context.Filme.Add(filme);
         _context.SaveChanges();
         return CreatedAtAction(nameof(retornaFilmesId), new { id = filme.id }, filme);
@@ -43,7 +43,7 @@ public class FilmeController : ControllerBase
     public IActionResult retornaFilmesId(int id)
     {
         var filme = _context.Filme.FirstOrDefault(filmes => filmes.id == id);
-        if(filme == null)
+        if (filme == null)
         {
             return NotFound();
         }
@@ -55,19 +55,39 @@ public class FilmeController : ControllerBase
 
     public IActionResult atualizaFilmeDto(int id, [FromBody] UpdateFilmeDto filmedto) {
         var filme = _context.Filme.FirstOrDefault(FilmesApi => FilmesApi.id == id);
+        if (filme == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            filme.titulo = filmedto.titulo;
+            filme.genero = filmedto.genero;
+            filme.duracao = filmedto.duracao;
+
+            _context.SaveChanges();
+            return NoContent();
+
+        }
+    }
+    [HttpDelete("{id}")]
+    public IActionResult DeletaFilmeDto (int id, [FromBody] DeleteFilmeDto filmedto)
+    {
+        var filme = _context.Filme.FirstOrDefault(FilmesApi => FilmesApi.id == id);
         if(filme == null)
         {
             return NotFound();
         }
         else
         {
-          filme.titulo = filmedto.titulo;
-          filme.genero = filmedto.genero;
-          filme.duracao = filmedto.duracao;
+            filme.titulo = filmedto.titulo;
+            filme.genero = filmedto.genero;
+            filme.duracao = filmedto.duracao;
 
+            _context.Remove(filme);
             _context.SaveChanges();
-            return NoContent();
-
         }
+
+        return NoContent();
     }
 }

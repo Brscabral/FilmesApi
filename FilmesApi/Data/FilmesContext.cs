@@ -7,7 +7,7 @@ namespace FilmesApi.Data
     {
         public FilmesContext(DbContextOptions<FilmesContext> opts) :base(opts) { }
 
-        public DbSet<Filme> Filme { get; set; }
+        public DbSet<Filme> Filme { get; set; } 
         
             
         
