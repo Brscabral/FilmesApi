@@ -6,6 +6,6 @@ namespace FilmesApi.Data.Dto
     {
         [Required(ErrorMessage = "O campo de nome é obrigatorio")]
         [MaxLength(50)]
-        string nome { get; set; }
+       public string nome { get; set; }
     }
 }

@@ -32,19 +32,39 @@ public class CinemaController: ControllerBase
 
     public IActionResult RetornaCinemaId(int id)
     {
-        var cinema = _context.Filme.FirstOrDefault(cinemas => cinemas.id == id);
+        var cinema = _context.Cinemas.FirstOrDefault(cinemas => cinemas.id == id);
         if (id == null)
         {
             return NotFound();
         }
         return Ok(cinema);
     }
+    [HttpPut("{id}")]
+
+    public IActionResult AtualizaCinema(int id,[FromBody] UpdateCinemaDto cinemaDto)
+    {
+        var cinema = _context.Cinemas.FirstOrDefault(Cinema => Cinema.id == id);
+        if(cinema == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+
+
+            cinema.nome = cinemaDto.nome;
+            
+         _context.SaveChanges();
+            return NoContent();
+
+        }
+    }
 
     [HttpDelete("{id}")]
 
     public IActionResult DeletaCinema(int id)
     {
-        var cinema = _context.Filme.FirstOrDefault(cinemas => cinemas.id == id);
+        var cinema = _context.Cinemas.FirstOrDefault(cinemas => cinemas.id == id);
         if (id == null)
         {
             return NotFound();
@@ -52,8 +72,10 @@ public class CinemaController: ControllerBase
         else
         {
             _context.Remove(cinema);
-            return Ok(cinema);
+            _context.SaveChanges();
+            
         }
+        return NoContent();
         
     }
 
