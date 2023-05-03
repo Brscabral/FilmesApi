@@ -4,6 +4,8 @@ namespace FilmesApi.models
 {
     public class Filme
     {
+        internal string nome;
+
         [Key]
         [Required]
         

@@ -8,7 +8,8 @@ namespace FilmesApi.Data
         public FilmesContext(DbContextOptions<FilmesContext> opts) :base(opts) { }
 
         public DbSet<Filme> Filme { get; set; } 
-        public DbSet<Cinema> Cinemas { get; set; }
+        public DbSet<Cinema> Cinema { get; set; }
+        public DbSet<Endereco> Endereco { get; set; }
         
             
         
