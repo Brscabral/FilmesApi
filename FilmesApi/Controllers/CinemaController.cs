@@ -74,6 +74,7 @@ public class CinemaController: ControllerBase
         }
         else
         {
+            
             _context.Remove(cinema);
             _context.SaveChanges();
             

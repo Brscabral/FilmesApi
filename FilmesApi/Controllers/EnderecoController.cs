@@ -45,6 +45,40 @@ public class EnderecoController: ControllerBase
 
     }
 
+    [HttpPut("{id}")]
+    public IActionResult atualizaEndereco(int id, [FromBody] UpdateEnderecoDto enderecoDto )
+    {
+        var endereco = _context.Endereco.FirstOrDefault(endereco => endereco.id == id);
+        if (id == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            endereco.logradouro = enderecoDto.logradouro;
+            endereco.numero = enderecoDto.numero;
+            _context.SaveChanges();
+            return NoContent();
+        }
+        
+    }
+    [HttpDelete("{id}")]
+
+    public IActionResult DeletaEndereco(int id)
+    {
+        var endereco = _context.Endereco.FirstOrDefault(endereco => endereco.id == id);
+        if(id == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            _context.Remove(endereco);
+            _context.SaveChanges();
+            return NoContent();
+        }
+    }
+
 
 
 }
