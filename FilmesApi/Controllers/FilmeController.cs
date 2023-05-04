@@ -28,7 +28,7 @@ public class FilmeController : ControllerBase
 
         };
 
-        _context.Filme.Add(filme);
+        _context.Filmes.Add(filme);
         _context.SaveChanges();
         return CreatedAtAction(nameof(retornaFilmesId), new { id = filme.id }, filme);
     }
@@ -36,13 +36,13 @@ public class FilmeController : ControllerBase
     [HttpGet]
     public IEnumerable<Filme> retornaFilmes()
     {
-        return _context.Filme;
+        return _context.Filmes;
     }
 
     [HttpGet("{id}")]
     public IActionResult retornaFilmesId(int id)
     {
-        var filme = _context.Filme.FirstOrDefault(filmes => filmes.id == id);
+        var filme = _context.Filmes.FirstOrDefault(filmes => filmes.id == id);
         if (filme == null)
         {
             return NotFound();
@@ -54,7 +54,7 @@ public class FilmeController : ControllerBase
     [HttpPut("{id}")]
 
     public IActionResult atualizaFilmeDto(int id, [FromBody] UpdateFilmeDto filmedto) {
-        var filme = _context.Filme.FirstOrDefault(FilmesApi => FilmesApi.id == id);
+        var filme = _context.Filmes.FirstOrDefault(FilmesApi => FilmesApi.id == id);
         if (filme == null)
         {
             return NotFound();
@@ -73,7 +73,7 @@ public class FilmeController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeletaFilmeDto (int id, [FromBody] DeleteFilmeDto filmedto)
     {
-        var filme = _context.Filme.FirstOrDefault(FilmesApi => FilmesApi.id == id);
+        var filme = _context.Filmes.FirstOrDefault(FilmesApi => FilmesApi.id == id);
         if(filme == null)
         {
             return NotFound();

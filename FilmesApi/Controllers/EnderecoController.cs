@@ -25,18 +25,18 @@ public class EnderecoController: ControllerBase
             logradouro = enderecoDto.logradouro,
             numero = enderecoDto.numero,
         };
-        _context.Endereco.Add(endereco);
+        _context.Enderecos.Add(endereco);
         _context.SaveChanges();
         return CreatedAtAction(nameof(retornaEnderecoPorId), new { id = endereco.id }, endereco);
     }
 
     [HttpGet]
-    public IEnumerable<Endereco> retornaCinema() { return _context.Endereco; }
+    public IEnumerable<Endereco> retornaCinema() { return _context.Enderecos; }
 
     [HttpGet("{id}")]
     public IActionResult retornaEnderecoPorId(int id)
     {
-        var endereco = _context.Endereco.FirstOrDefault(endereco => endereco.id == id);
+        var endereco = _context.Enderecos.FirstOrDefault(endereco => endereco.id == id);
         if(id == null)
         {
             return NotFound();
@@ -48,7 +48,7 @@ public class EnderecoController: ControllerBase
     [HttpPut("{id}")]
     public IActionResult atualizaEndereco(int id, [FromBody] UpdateEnderecoDto enderecoDto )
     {
-        var endereco = _context.Endereco.FirstOrDefault(endereco => endereco.id == id);
+        var endereco = _context.Enderecos.FirstOrDefault(endereco => endereco.id == id);
         if (id == null)
         {
             return NotFound();
@@ -66,7 +66,7 @@ public class EnderecoController: ControllerBase
 
     public IActionResult DeletaEndereco(int id)
     {
-        var endereco = _context.Endereco.FirstOrDefault(endereco => endereco.id == id);
+        var endereco = _context.Enderecos.FirstOrDefault(endereco => endereco.id == id);
         if(id == null)
         {
             return NotFound();

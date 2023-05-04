@@ -22,20 +22,20 @@ public class CinemaController: ControllerBase
     public IActionResult CriaCinema([FromBody] CreateCinemaDto cinemaDto)
     {
         Cinema cinema = new Cinema() {nome = cinemaDto.nome };
-        _context.Cinema.Add(cinema);
+        _context.Cinemas.Add(cinema);
         _context.SaveChanges();
 
        return CreatedAtAction(nameof(RetornaCinemaId), new {id = cinema.id}, cinema);
     }
 
     [HttpGet]
-    public IEnumerable<Cinema> retornaCinema() { return _context.Cinema; }
+    public IEnumerable<Cinema> retornaCinema() { return _context.Cinemas; }
 
     [HttpGet("{id}")]
 
     public IActionResult RetornaCinemaId(int id)
     {
-        var cinema = _context.Cinema.FirstOrDefault(cinemas => cinemas.id == id);
+        var cinema = _context.Cinemas.FirstOrDefault(cinemas => cinemas.id == id);
         if (id == null)
         {
             return NotFound();
@@ -46,7 +46,7 @@ public class CinemaController: ControllerBase
 
     public IActionResult AtualizaCinema(int id,[FromBody] UpdateCinemaDto cinemaDto)
     {
-        var cinema = _context.Cinema.FirstOrDefault(Cinema => Cinema.id == id);
+        var cinema = _context.Cinemas.FirstOrDefault(Cinema => Cinema.id == id);
         if(cinema == null)
         {
             return NotFound();
@@ -67,7 +67,7 @@ public class CinemaController: ControllerBase
 
     public IActionResult DeletaCinema(int id)
     {
-        var cinema = _context.Cinema.FirstOrDefault(cinemas => cinemas.id == id);
+        var cinema = _context.Cinemas.FirstOrDefault(cinemas => cinemas.id == id);
         if (id == null)
         {
             return NotFound();
