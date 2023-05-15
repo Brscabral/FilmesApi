@@ -47,7 +47,17 @@ public class FilmeController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(filme);
+        ReadFilmeDto RfilmeDto = new ReadFilmeDto();
+
+
+        filme.titulo = RfilmeDto.titulo;
+        filme.genero = RfilmeDto.genero;
+        filme.duracao = RfilmeDto.duracao;
+
+        var filmeDto = filme;
+
+
+        return Ok(filmeDto);
 
     }
 

@@ -21,7 +21,7 @@ public class CinemaController: ControllerBase
     [HttpPost]
     public IActionResult CriaCinema([FromBody] CreateCinemaDto cinemaDto)
     {
-        Cinema cinema = new Cinema() {nome = cinemaDto.nome };
+        Cinema cinema = new Cinema() {nome = cinemaDto.nome, EnderecoId = cinemaDto.EnderecoId};
         _context.Cinemas.Add(cinema);
         _context.SaveChanges();
 
@@ -40,7 +40,15 @@ public class CinemaController: ControllerBase
         {
             return NotFound();
         }
-        return Ok(cinema);
+        ReadCinemaDto RcinemaDto = new ReadCinemaDto();
+
+        cinema.nome = RcinemaDto.nome;
+
+        var cinemaDto = cinema;
+
+
+
+        return Ok(cinemaDto);
     }
     [HttpPut("{id}")]
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FilmesApi.Migrations
 {
     [DbContext(typeof(FilmesContext))]
-    [Migration("20230504021155_criandoTabelaDeCinema")]
-    partial class criandoTabelaDeCinema
+    [Migration("20230515140452_Endereco e Cinema")]
+    partial class EnderecoeCinema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,12 +27,18 @@ namespace FilmesApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("nome")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
 
                     b.ToTable("Cinemas");
                 });
@@ -76,6 +82,22 @@ namespace FilmesApi.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Filmes");
+                });
+
+            modelBuilder.Entity("FilmesApi.models.Cinema", b =>
+                {
+                    b.HasOne("FilmesApi.models.Endereco", "Endereco")
+                        .WithOne("Cinema")
+                        .HasForeignKey("FilmesApi.models.Cinema", "EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("FilmesApi.models.Endereco", b =>
+                {
+                    b.Navigation("Cinema");
                 });
 #pragma warning restore 612, 618
         }
