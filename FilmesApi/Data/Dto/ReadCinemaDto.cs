@@ -7,4 +7,5 @@ public class ReadCinemaDto
     public int EnderecoId { get; set; }
     public DateTime TempoDaConsulta = DateTime.Now;
     public ReadeEnderecoDto ReadEnderecoDto { get; set; }
+    public ICollection<ReadSessaoDto> ReadSessaoDto { get; set;}
 }

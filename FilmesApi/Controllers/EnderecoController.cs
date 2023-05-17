@@ -31,7 +31,26 @@ public class EnderecoController: ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Endereco> retornaCinema() { return _context.Enderecos; }
+    public IEnumerable<ReadeEnderecoDto> RecuperaEnderecos()
+    {
+        var enderecos = _context.Enderecos;
+
+        List<ReadeEnderecoDto> enderecosDto = new List<ReadeEnderecoDto>();
+
+        foreach (var endereco in enderecos)
+        {
+            ReadeEnderecoDto enderecoDto = new ReadeEnderecoDto
+            {
+                
+                logradouro = endereco.logradouro,
+                numero = endereco.numero
+            };
+
+            enderecosDto.Add(enderecoDto);
+        }
+
+        return enderecosDto;
+    }
 
     [HttpGet("{id}")]
     public IActionResult retornaEnderecoPorId(int id)

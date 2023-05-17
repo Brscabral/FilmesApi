@@ -2,6 +2,7 @@
 using FilmesApi.Data.Dto;
 using FilmesApi.models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmesApi.Controllers;
 
@@ -34,9 +35,37 @@ public class FilmeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Filme> retornaFilmes()
+    public IEnumerable<ReadFilmeDto> RecuperaFilme()
     {
-        return _context.Filmes;
+        var filmes = _context.Filmes
+        .Include(f => f.Sessoes);
+     
+
+        List<ReadFilmeDto> filmesDto = new List<ReadFilmeDto>();
+
+        foreach (var filme in filmes)
+        {
+            ReadFilmeDto filmeDto = new ReadFilmeDto
+            {
+
+                titulo = filme.titulo,
+                genero = filme.genero,
+                duracao = filme.duracao
+
+            };
+            filmeDto.Sessoes = filme.Sessoes.Select(sessao => new ReadSessaoDto
+            {
+                Id = sessao.Id,
+                FilmeId = sessao.FilmeId,
+                CinemaId = (int)sessao.CinemaId
+                
+                // Mapeie outras propriedades relevantes da sessão
+            }).ToList();
+
+            filmesDto.Add(filmeDto);
+        }
+
+        return filmesDto;
     }
 
     [HttpGet("{id}")]
@@ -47,17 +76,7 @@ public class FilmeController : ControllerBase
         {
             return NotFound();
         }
-        ReadFilmeDto RfilmeDto = new ReadFilmeDto();
-
-
-        filme.titulo = RfilmeDto.titulo;
-        filme.genero = RfilmeDto.genero;
-        filme.duracao = RfilmeDto.duracao;
-
-        var filmeDto = filme;
-
-
-        return Ok(filmeDto);
+        return Ok(filme);
 
     }
 
