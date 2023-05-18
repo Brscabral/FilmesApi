@@ -57,8 +57,8 @@ public class FilmeController : ControllerBase
             {
                 Id = sessao.Id,
                 FilmeId = sessao.FilmeId,
-                CinemaId = (int)sessao.CinemaId
-                
+                CinemaId = sessao.CinemaId ?? 0
+
                 // Mapeie outras propriedades relevantes da sessão
             }).ToList();
 
