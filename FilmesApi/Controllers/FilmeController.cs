@@ -55,7 +55,6 @@ public class FilmeController : ControllerBase
             };
             filmeDto.Sessoes = filme.Sessoes.Select(sessao => new ReadSessaoDto
             {
-                Id = sessao.Id,
                 FilmeId = sessao.FilmeId,
                 CinemaId = sessao.CinemaId ?? 0
 

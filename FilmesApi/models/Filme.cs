@@ -21,7 +21,7 @@ namespace FilmesApi.models
         [Range(70,600, ErrorMessage = "O filme não poderá ter uma duração menor do que 70 minutos ou maior que 600 minutos")]
         public Int32 duracao { get; set; }
         public virtual ICollection<Sessao> Sessoes { get; set; }
-        public virtual ICollection<ReadSessaoDto> ReadSessoesDto { get; set; }
+        //public virtual ICollection<ReadSessaoDto> ReadSessoesDto { get; set; }
 
 
     }

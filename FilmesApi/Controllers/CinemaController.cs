@@ -56,7 +56,6 @@ public class CinemaController: ControllerBase
             };
             cinemaDto.ReadSessaoDto = cinema.Sessoes.Select(sessao => new ReadSessaoDto
             {
-                Id = sessao.Id,
 
                 FilmeId = sessao.FilmeId,
                 CinemaId = (int)sessao.CinemaId

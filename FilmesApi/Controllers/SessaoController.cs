@@ -23,7 +23,7 @@ public class SessaoController : ControllerBase
         _context.Sessoes.Add(sessao);
         _context.SaveChanges();
 
-        return CreatedAtAction(nameof(RecuperaSessaoPorId), new { Id = sessao.Id }, sessao);
+        return CreatedAtAction(nameof(RecuperaSessaoPorId), new { FilmeId = sessao.FilmeId, CinemaId = sessao.CinemaId}, sessao);
     }
     [HttpGet]
     public IEnumerable<ReadSessaoDto> GetSessoes(ReadSessaoDto rsessao)
@@ -36,7 +36,6 @@ public class SessaoController : ControllerBase
         {
             ReadSessaoDto rsessaoDto = new ReadSessaoDto
             {
-                Id = sessao.Id,
                 FilmeId = sessao.FilmeId,
                 CinemaId = (int)sessao.CinemaId
             };
@@ -48,17 +47,19 @@ public class SessaoController : ControllerBase
     }
 
 
-    [HttpGet("{id}")]
-    public IActionResult RecuperaSessaoPorId(int id)
+    [HttpGet("{FilmeId}/{CinemaId}")]
+    public IActionResult RecuperaSessaoPorId(int FilmeId, int CinemaId)
     {
-        Sessao sessao = _context.Sessoes.Include(s => s.Id).FirstOrDefault(s => s.Id == id);
+        Sessao sessao = _context.Sessoes.Include(s => s.FilmeId).FirstOrDefault(s => s.FilmeId == FilmeId);
+        sessao = _context.Sessoes.Include(s => s.CinemaId).FirstOrDefault(s => s.CinemaId == CinemaId);
 
         if (sessao != null)
         {
             ReadSessaoDto sessaoDto = new ReadSessaoDto
             {
 
-                Id = sessao.Id
+                FilmeId = sessao.FilmeId,
+                CinemaId = sessao.CinemaId
             };
 
             return Ok(sessaoDto);
